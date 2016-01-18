@@ -2,9 +2,9 @@ project(shoppinglist_cqrs)
 
 cmake_minimum_required(VERSION 2.6)
 
-add_definitions(-std=c++11 -Wall -Wextra)
+add_definitions(-std=c++14 -Wall -Wextra)
 
-include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR})
+include_directories(${CMAKE_SOURCE_DIR}/src ${CMAKE_BINARY_DIR})
 
 execute_process(COMMAND git submodule update --init --recursive)
 
