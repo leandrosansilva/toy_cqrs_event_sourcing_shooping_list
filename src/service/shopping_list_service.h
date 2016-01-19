@@ -7,6 +7,8 @@
 #include <event_projector.h>
 
 #include <commands/add_item_command.h>
+#include <commands/remove_item_command.h>
+
 #include <queries/empty_list_query.h>
 #include <queries/get_list_query.h>
 
@@ -25,8 +27,12 @@ struct shopping_list_service
   // FIXME: include timestamp
   void add_item(const dto::item &item)
   {
-    auto events = commands::add_item_command(item).build_events();
-    _publisher.publish(events);
+    _publisher.publish(commands::add_item_command(item).build_events());
+  }
+
+  void remove_item(const dto::item &item)
+  {
+    _publisher.publish(commands::remove_item_command(item).build_events());
   }
 
   dto::shopping_list get_list()

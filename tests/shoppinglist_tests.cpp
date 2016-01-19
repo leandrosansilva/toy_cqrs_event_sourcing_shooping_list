@@ -52,6 +52,37 @@ go_bandit([]{
       );
     });
 
+    it("Adds two items of two types, but then remove the first one", [&]{
+      sls service;
+      service.add_item(dto::item{"item 1", 1, "kg"});
+      service.add_item(dto::item{"item 2", 1, "mg"});
+      service.remove_item(dto::item{"item 1", 1, "kg"});
+
+      auto list = service.get_list();
+      AssertThat(
+        list._items, 
+        EqualsContainer(item_vector {
+          {"item 2", 1, "mg"}
+        })
+      );
+    });
+
+    it("Adds several items of two types, but then remove some of the first one", [&]{
+      sls service;
+      service.add_item(dto::item{"item 1", 5, "kg"});
+      service.add_item(dto::item{"item 2", 43, "mg"});
+      service.add_item(dto::item{"item 1", 7, "kg"});
+      service.remove_item(dto::item{"item 1", 4, "kg"});
+
+      auto list = service.get_list();
+      AssertThat(
+        list._items, 
+        EqualsContainer(item_vector {
+          {"item 1", 8, "kg"},
+          {"item 2", 43, "mg"}
+        })
+      );
+    });
 
   });
 });
