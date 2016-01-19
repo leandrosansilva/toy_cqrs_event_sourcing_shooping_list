@@ -16,7 +16,9 @@ struct add_item_event: event
 
   dto::shopping_list transform(const dto::shopping_list &list) override
   {
-    return dto::shopping_list {std::vector<dto::item> {_item}};
+    auto copy_list = list;
+    copy_list._items.push_back(_item);
+    return copy_list;
   }
 };
 

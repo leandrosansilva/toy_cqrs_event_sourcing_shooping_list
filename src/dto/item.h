@@ -12,3 +12,10 @@ struct item
 };
 
 }
+
+bool operator==(const dto::item &a, const dto::item &b)
+{
+  return a.name == b.name 
+         && a.amount == b.amount 
+         && a.unit == b.unit;
+}

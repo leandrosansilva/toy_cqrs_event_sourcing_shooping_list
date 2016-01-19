@@ -8,6 +8,7 @@
 
 #include <commands/add_item_command.h>
 #include <queries/empty_list_query.h>
+#include <queries/get_list_query.h>
 
 struct shopping_list_service
 {
@@ -26,6 +27,11 @@ struct shopping_list_service
   {
     auto events = commands::add_item_command(item).build_events();
     _publisher.publish(events);
+  }
+
+  dto::shopping_list get_list()
+  {
+    return queries::get_list_query(_projector).run();
   }
 
   bool list_is_empty()
