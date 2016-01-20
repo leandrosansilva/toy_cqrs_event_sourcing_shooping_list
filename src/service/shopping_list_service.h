@@ -8,6 +8,7 @@
 
 #include <commands/add_item_command.h>
 #include <commands/remove_item_command.h>
+#include <commands/undo_command.h>
 
 #include <queries/empty_list_query.h>
 #include <queries/get_list_query.h>
@@ -33,6 +34,11 @@ struct shopping_list_service
   void remove_item(const dto::item &item)
   {
     _publisher.publish(commands::remove_item_command(item).build_events());
+  }
+
+  void undo_last_action()
+  {
+    _publisher.publish(commands::undo_command().build_events());
   }
 
   dto::shopping_list get_list()

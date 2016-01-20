@@ -16,12 +16,13 @@ struct add_item_event: event
 
   dto::shopping_list transform(const dto::shopping_list &list) override
   {
-    dto::shopping_list list_copy = list;
+    auto list_copy = list;
     
     return ([this, list_copy]() mutable {
       auto found = std::find_if(std::begin(list_copy._items), std::end(list_copy._items), 
         [this] (const dto::item &item) {
-          return item.name == _item.name;
+          return item.name == _item.name
+                 && item.unit == _item.unit;
         }
       );
       

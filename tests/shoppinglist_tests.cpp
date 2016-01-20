@@ -84,6 +84,22 @@ go_bandit([]{
       );
     });
 
+    it("Adds two items of different types and undo the last added one", [&]{
+      sls service;
+      service.add_item(dto::item{"item 1", 5, "kg"});
+      service.add_item(dto::item{"item 2", 43, "mg"});
+      service.undo_last_action();
+
+      auto list = service.get_list();
+      AssertThat(
+        list._items, 
+        EqualsContainer(item_vector {
+          {"item 1", 5, "kg"}
+        })
+      );
+    });
+
+
   });
 });
 
