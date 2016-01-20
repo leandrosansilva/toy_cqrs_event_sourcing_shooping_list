@@ -19,29 +19,27 @@ struct remove_item_event: event
   {
     auto copy_list = list;
     
-    return ([this, copy_list]() mutable {
-      auto found(std::find_if(std::begin(copy_list._items), std::end(copy_list._items), 
-        [this](const dto::item &item) {
-          return item.name == _item.name;
-        }
-      ));
-  
-      if (found == std::end(copy_list._items)) {
-        throw std::runtime_error("Item not found in the list!");
+    auto found(std::find_if(std::begin(copy_list._items), std::end(copy_list._items), 
+      [this](const dto::item &item) {
+        return item.name == _item.name;
       }
+    ));
 
-      if (found->amount < _item.amount) {
-        throw std::runtime_error("Insuficient items to remove!");
-      }
+    if (found == std::end(copy_list._items)) {
+      throw std::runtime_error("Item not found in the list!");
+    }
 
-      found->amount -= _item.amount;
+    if (found->amount < _item.amount) {
+      throw std::runtime_error("Insuficient items to remove!");
+    }
 
-      if (found->amount == 0) {
-        copy_list._items.erase(found);
-      }
+    found->amount -= _item.amount;
 
-      return copy_list;
-    })();
+    if (found->amount == 0) {
+      copy_list._items.erase(found);
+    }
+
+    return copy_list;
   }
 };
 

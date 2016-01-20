@@ -18,22 +18,20 @@ struct add_item_event: event
   {
     auto list_copy = list;
     
-    return ([this, list_copy]() mutable {
-      auto found = std::find_if(std::begin(list_copy._items), std::end(list_copy._items), 
-        [this] (const dto::item &item) {
-          return item.name == _item.name
-                 && item.unit == _item.unit;
-        }
-      );
-      
-      if (found != std::end(list_copy._items)) {
-        found->amount += _item.amount;
-        return list_copy;
+    auto found = std::find_if(std::begin(list_copy._items), std::end(list_copy._items), 
+      [this] (const dto::item &item) {
+        return item.name == _item.name
+               && item.unit == _item.unit;
       }
-      
-      list_copy._items.push_back(_item);
+    );
+    
+    if (found != std::end(list_copy._items)) {
+      found->amount += _item.amount;
       return list_copy;
-    })();
+    }
+    
+    list_copy._items.push_back(_item);
+    return list_copy;
   }
 };
 
