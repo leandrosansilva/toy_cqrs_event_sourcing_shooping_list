@@ -6,6 +6,12 @@
 
 struct event_projector
 {
+  struct accumulator
+  {
+    events::iterator it;
+    dto::shopping_list list;
+  };
+
   event_repository& _repository;
 
   event_projector(event_repository &repository):
@@ -16,12 +22,21 @@ struct event_projector
   dto::shopping_list play() const
   {
     return std::accumulate(
-      std::begin(_repository._events), 
+      std::begin(_repository._events),
       std::end(_repository._events),
-      dto::shopping_list(),
-      [](const dto::shopping_list &list, event_ptr ev) {
-        return ev->transform(list);
+      accumulator{std::begin(_repository._events), {}},
+      [this](const accumulator &acc, event_ptr ev) {
+        event_transformation_param param {
+          acc.list,
+          _repository._events,
+          acc.it
+        };
+
+        return accumulator {
+          std::next(acc.it),
+          ev->transform(param)
+        };
       }
-    );
+    ).list;
   }
 };

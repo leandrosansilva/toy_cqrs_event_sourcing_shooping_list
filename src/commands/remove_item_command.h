@@ -15,9 +15,9 @@ struct remove_item_event: event
   {
   }
 
-  dto::shopping_list transform(const dto::shopping_list &list) override
+  dto::shopping_list transform(const event_transformation_param &p) override
   {
-    auto copy_list = list;
+    auto copy_list = p.list;
     
     auto found(std::find_if(std::begin(copy_list._items), std::end(copy_list._items), 
       [this](const dto::item &item) {
