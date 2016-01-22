@@ -99,6 +99,23 @@ go_bandit([]{
       );
     });
 
+    it("Adds two items, remove the first one and then undo this removal", [&]{
+      sls service;
+      service.add_item(dto::item{"item 1", 5, "kg"});
+      service.add_item(dto::item{"item 2", 43, "mg"});
+      service.remove_item(dto::item{"item 1", 5, "kg"});
+      service.undo_last_action();
+
+      auto list = service.get_list();
+      AssertThat(
+        list._items, 
+        EqualsContainer(item_vector {
+          {"item 1", 5, "kg"},
+          {"item 2", 43, "mg"}
+        })
+      );
+    });
+
 
   });
 });

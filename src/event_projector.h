@@ -21,6 +21,7 @@ struct event_projector
 
   dto::shopping_list play() const
   {
+    // FIXME: replace this accumulate with a simpler while loop
     return std::accumulate(
       std::begin(_repository._events),
       std::end(_repository._events),

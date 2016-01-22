@@ -11,11 +11,15 @@ struct undo_event: event
     // FIXME: what if p.it is begin(events)?
     auto prev_event_iter = std::prev(p.it);
 
-    if (auto ptr = std::dynamic_pointer_cast<add_item_event>(*prev_event_iter)) {
-      return remove_item_event(ptr->_item).transform(p); 
+    if (auto ev = std::dynamic_pointer_cast<add_item_event>(*prev_event_iter)) {
+      return remove_item_event(ev->_item).transform(p); 
+    }
+
+    if (auto ev = std::dynamic_pointer_cast<remove_item_event>(*prev_event_iter)) {
+      return add_item_event(ev->_item).transform(p);
     }
    
-    return p.list;
+    throw std::runtime_error("This action cannot be undone!?");
   }
 };
 
