@@ -8,7 +8,7 @@ struct event_projector
 {
   struct accumulator
   {
-    events::iterator it;
+    events::const_iterator it;
     dto::shopping_list list;
   };
 
@@ -27,15 +27,9 @@ struct event_projector
       std::end(_repository._events),
       accumulator{std::begin(_repository._events), {}},
       [this](const accumulator &acc, event_ptr ev) {
-        event_transformation_param param {
-          acc.list,
-          _repository._events,
-          acc.it
-        };
-
         return accumulator {
           std::next(acc.it),
-          ev->transform(param)
+          ev->transform({acc.list, _repository._events, acc.it})
         };
       }
     ).list;
