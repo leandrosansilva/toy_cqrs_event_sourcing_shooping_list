@@ -1,6 +1,8 @@
 # Playing with CQRS and Event Sourcing
 
-On Jan 14th the Group Softwerkskammer Munich organized another meetup, and the topic was CRQS (Command Query Command
+On Jan 14th
+the group <a href="http://www.meetup.com/Software-Craftsmanship-Meetup-Softwerkskammer-Munchen/events/227376769/">
+Softwerkskammer Munich</a> organized another awesome meetup, and the topic was CRQS (Command Query Command
 Responsability Segregation) and Event Sourcing, which were unknown to me.
 
 After a brief explanation by <a href="https://github.com/hovinen">Bradford Hovinen</a>, we started our Kata, described
