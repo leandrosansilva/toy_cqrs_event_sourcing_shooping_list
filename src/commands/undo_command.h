@@ -13,7 +13,10 @@ struct undo_event: event
 
   dto::shopping_list undo(const event_transformation_param &p, int undone_action_distance)
   {
-    // FIXME: what if p.it is begin(events)?
+    if (std::distance(std::begin(p.all_events), p.it) < undone_action_distance) {
+      return p.list;
+    }
+
     auto prev_event_iter = std::prev(p.it, undone_action_distance);
 
     if (auto ev = std::dynamic_pointer_cast<add_item_event>(*prev_event_iter)) {

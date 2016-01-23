@@ -28,7 +28,7 @@ go_bandit([]{
 
       auto list = service.get_list();
       AssertThat(
-        list._items, 
+        list._items,
         EqualsContainer(item_vector {
           {"item 1", 1, "kg"},
           {"second item", 42, "mg"},
@@ -43,7 +43,7 @@ go_bandit([]{
 
       auto list = service.get_list();
       AssertThat(
-        list._items, 
+        list._items,
         EqualsContainer(item_vector {
           {"item 1", 1, "kg"},
           {"second item", 42, "mg"},
@@ -59,7 +59,7 @@ go_bandit([]{
 
       auto list = service.get_list();
       AssertThat(
-        list._items, 
+        list._items,
         EqualsContainer(item_vector {
           {"item 1", 4, "kg"},
           {"second item", 42, "mg"},
@@ -75,7 +75,7 @@ go_bandit([]{
 
       auto list = service.get_list();
       AssertThat(
-        list._items, 
+        list._items,
         EqualsContainer(item_vector {
           {"item 2", 1, "mg"}
         })
@@ -91,7 +91,7 @@ go_bandit([]{
 
       auto list = service.get_list();
       AssertThat(
-        list._items, 
+        list._items,
         EqualsContainer(item_vector {
           {"item 1", 8, "kg"},
           {"item 2", 43, "mg"}
@@ -107,7 +107,7 @@ go_bandit([]{
 
       auto list = service.get_list();
       AssertThat(
-        list._items, 
+        list._items,
         EqualsContainer(item_vector {
           {"item 1", 5, "kg"}
         })
@@ -126,7 +126,7 @@ go_bandit([]{
 
       auto list = service.get_list();
       AssertThat(
-        list._items, 
+        list._items,
         EqualsContainer(item_vector {
           {"item 1", 5, "kg"},
           {"item 2", 43, "mg"},
@@ -135,7 +135,34 @@ go_bandit([]{
       );
     });
 
+    it("Starts with undo, which has no effect", [&]{
+      sls service;
+      service.undo_last_action();
 
+      auto list = service.get_list();
+      AssertThat(
+        list._items,
+        EqualsContainer(item_vector {})
+      );
+    });
+
+    it("Adds one item, then calls undo several times", [&]{
+      sls service;
+      service.add_item(dto::item{"third item", 35, "km"});
+      service.undo_last_action();
+      service.undo_last_action();
+      service.undo_last_action();
+      service.undo_last_action();
+      service.undo_last_action();
+      service.undo_last_action();
+      service.undo_last_action();
+
+      auto list = service.get_list();
+      AssertThat(
+        list._items,
+        EqualsContainer(item_vector {})
+      );
+    });
   });
 });
 

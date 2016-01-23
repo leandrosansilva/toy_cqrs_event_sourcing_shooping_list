@@ -14,7 +14,7 @@ struct event_transformation_param
 {
   const dto::shopping_list &list;
   const events &all_events;
-  const events::iterator &it;
+  const events::const_iterator &it;
 };
 
 struct event
