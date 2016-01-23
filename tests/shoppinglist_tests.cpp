@@ -36,6 +36,21 @@ go_bandit([]{
       );
     });
 
+    it("Adds two different items in reverse order results in a list with two items types", [&]{
+      sls service;
+      service.add_item(dto::item{"second item", 42, "mg"});
+      service.add_item(dto::item{"item 1", 1, "kg"});
+
+      auto list = service.get_list();
+      AssertThat(
+        list._items, 
+        EqualsContainer(item_vector {
+          {"item 1", 1, "kg"},
+          {"second item", 42, "mg"},
+        })
+      );
+    });
+
     it("Adds three items types, but aggregates two which are the same ", [&]{
       sls service;
       service.add_item(dto::item{"item 1", 1, "kg"});
@@ -99,11 +114,14 @@ go_bandit([]{
       );
     });
 
-    it("Adds two items, remove the first one and then undo this removal", [&]{
+    it("Adds three items, remove the first one and then undo this removal and the last addition", [&]{
       sls service;
+      service.add_item(dto::item{"third item", 35, "km"});
       service.add_item(dto::item{"item 1", 5, "kg"});
       service.add_item(dto::item{"item 2", 43, "mg"});
-      service.remove_item(dto::item{"item 1", 5, "kg"});
+      service.remove_item(dto::item{"item 1", 4, "kg"});
+      service.add_item(dto::item{"third item", 3, "km"});
+      service.undo_last_action();
       service.undo_last_action();
 
       auto list = service.get_list();
@@ -111,7 +129,8 @@ go_bandit([]{
         list._items, 
         EqualsContainer(item_vector {
           {"item 1", 5, "kg"},
-          {"item 2", 43, "mg"}
+          {"item 2", 43, "mg"},
+          {"third item", 35, "km"}
         })
       );
     });
