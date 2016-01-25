@@ -26,10 +26,11 @@ What does this code do so far?
 - REST interface
 - Action Validation
 - Separation between Read and Write repository
+- "Strike" operation
 
 ## Running it 
 
-Unfortunately there is no "main" executable. So far there is only unit test code.
+Unfortunately there is no "main" executable yet. So far there is only unit test code.
 After cloning the repository, compile and run the tests with:
 
 ```bash
