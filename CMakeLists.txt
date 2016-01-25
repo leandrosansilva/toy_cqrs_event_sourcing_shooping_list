@@ -21,16 +21,20 @@ ExternalProject_Add(
   INSTALL_COMMAND true
 )
 
-Externalproject_Get_Property(re2 install_dir)
+ExternalProject_Get_Property(re2 install_dir)
 include_directories(${install_dir}/include)
+
+ExternalProject_Get_Property(re2 BINARY_DIR)
+
+message(${BINARY_DIR})
 
 ExternalProject_Add(
   served
   SOURCE_DIR ${CMAKE_SOURCE_DIR}/served
-  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_BINARY_DIR}/served -DSERVED_BUILD_STATIC=ON -DSERVED_BUILD_SHARED=OFF 
+  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_BINARY_DIR}/served -DSERVED_BUILD_STATIC=ON -DSERVED_BUILD_SHARED=OFF -DSERVED_INCLUDE_DIR:PATH=${CMAKE_SOURCE_DIR}/re2/ -DSERVED_LIB_DIR:PATH=${BINARY_DIR}/re2
 )
 
-Externalproject_Get_Property(served install_dir)
+ExternalProject_Get_Property(served install_dir)
 include_directories(${install_dir}/include)
 
 add_subdirectory(tests)

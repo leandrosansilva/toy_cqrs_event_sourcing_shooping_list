@@ -4,3 +4,6 @@
 [submodule "re2"]
 	path = re2
 	url = https://github.com/google/re2.git
+[submodule "served"]
+	path = served
+	url = https://github.com/leandrosansilva/served.git
