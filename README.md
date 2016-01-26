@@ -23,7 +23,6 @@ What does this code do so far?
 ## TODO
 
 - Notification system
-- REST interface
 - Action Validation
 - Separation between Read and Write repository
 - "Strike" operation
