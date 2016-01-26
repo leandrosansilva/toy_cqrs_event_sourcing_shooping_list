@@ -29,9 +29,7 @@ struct remove_item_event: event
       return copy_list;
     }
 
-    found->amount -= _item.amount;
-
-    if (found->amount == 0) {
+    if ((found->amount -= _item.amount) == 0) {
       copy_list._items.erase(found);
     }
 
