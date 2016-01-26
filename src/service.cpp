@@ -3,9 +3,9 @@
 #include <dto/serialization/item.h>
 #include <dto/serialization/shopping_list.h>
 
+#include <rest_utils.h>
+
 #include <served/served.hpp>
-#include <cereal/archives/json.hpp>
-#include <sstream>
 
 int main(int, char **)
 {
@@ -20,14 +20,13 @@ int main(int, char **)
     };
 
     service.add_item(item);
+
+    to_http_response(std::string("ok"), res, "application/json");
   });
 
   mux.handle("/shopping-list/list").get([&service](served::response &res, const served::request &req) {
-    std::stringstream ss;
-    cereal::JSONOutputArchive archive(ss);
-    archive(service.get_list());
+    to_http_response(service.get_list(), res, "application/json");
   });
-
 
   served::net::server server("0.0.0.0", "8080", mux);
 
