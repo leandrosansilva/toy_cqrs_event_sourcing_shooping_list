@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 2.6)
 
 add_definitions(-std=c++14 -Wall -Wextra)
 
-include_directories(${CMAKE_SOURCE_DIR}/src ${CMAKE_BINARY_DIR})
+include_directories(${CMAKE_SOURCE_DIR}/src ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR}/cereal/include)
 
 execute_process(COMMAND git submodule update --init --recursive)
 
