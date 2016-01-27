@@ -12,8 +12,10 @@ inline void to_http_response(const T &t, served::response &res, const std::strin
 
   res << ([&] {
     std::ostringstream ss; 
-    cereal::JSONOutputArchive archive(ss);
-    archive(cereal::make_nvp("result", t));
-    return ss;
-  })().str();
+    {
+      cereal::JSONOutputArchive archive(ss);
+      archive(cereal::make_nvp("result", t));
+    }
+    return ss.str();
+  })();
 }
